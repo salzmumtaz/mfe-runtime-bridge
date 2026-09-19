@@ -1,0 +1,10 @@
+node_modules
+dist
+example-dist
+angular-dist
+.angular
+example/angular-host/public/remote/react-remote.js
+coverage
+.DS_Store
+*.local
+config.bat

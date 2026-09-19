@@ -1,0 +1,98 @@
+{
+  "name": "@mfe-kit/runtime-bridge",
+  "version": "0.1.0",
+  "description": "A typed, framework-neutral runtime bridge for micro-frontends.",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "docs",
+    "README.md",
+    "SECURITY.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js",
+      "require": "./dist/react/index.cjs"
+    }
+  },
+  "scripts": {
+    "dev": "node init && vite --config example/vite.config.ts",
+    "dev:angular": "node init && npm run build:react-remote && ng serve angular-host --port 4300",
+    "build": "node init && npm run build:lib && npm run build:example && npm run build:angular",
+    "build:lib": "node init && tsup src/index.ts src/react/index.ts --format esm,cjs --dts --clean --out-dir dist",
+    "build:example": "node init && vite build --config example/vite.config.ts",
+    "build:react-remote": "node init && vite build --config example/react-remote.vite.config.ts",
+    "build:angular": "node init && npm run build:react-remote && ng build angular-host",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run lint && npm run typecheck && npm test && npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=18.2.0",
+    "react-dom": ">=18.2.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@angular/build": "^20.3.37",
+    "@angular/cli": "^20.3.37",
+    "@angular/common": "^20.3.31",
+    "@angular/compiler": "^20.3.31",
+    "@angular/compiler-cli": "^20.3.31",
+    "@angular/core": "^20.3.31",
+    "@angular/platform-browser": "^20.3.31",
+    "@angular/router": "^20.3.31",
+    "@eslint/js": "^9.35.0",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.2",
+    "eslint": "^9.35.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "jsdom": "^26.1.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "rxjs": "^7.8.2",
+    "tsup": "^8.5.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.42.0",
+    "tslib": "^2.8.1",
+    "vite": "^7.1.5",
+    "vitest": "^3.2.4"
+  },
+  "keywords": [
+    "micro-frontend",
+    "bridge",
+    "module-federation",
+    "react",
+    "typescript"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "license": "MIT"
+}

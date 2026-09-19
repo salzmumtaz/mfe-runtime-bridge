@@ -1,0 +1,48 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "example",
+  "projects": {
+    "angular-host": {
+      "projectType": "application",
+      "root": "example/angular-host",
+      "sourceRoot": "example/angular-host/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": "angular-dist",
+            "index": "example/angular-host/src/index.html",
+            "browser": "example/angular-host/src/main.ts",
+            "tsConfig": "example/angular-host/tsconfig.app.json",
+            "assets": [{ "glob": "**/*", "input": "example/angular-host/public" }],
+            "styles": ["example/angular-host/src/styles.css"]
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "all",
+              "budgets": [
+                { "type": "initial", "maximumWarning": "650kB", "maximumError": "1MB" },
+                { "type": "anyComponentStyle", "maximumWarning": "8kB", "maximumError": "12kB" }
+              ]
+            },
+            "development": { "optimization": false, "sourceMap": true }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": { "buildTarget": "angular-host:build:production" },
+            "development": { "buildTarget": "angular-host:build:development" }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": false
+  }
+}

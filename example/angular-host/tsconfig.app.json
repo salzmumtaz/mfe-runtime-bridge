@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../.angular/cache/ts-out",
+    "noEmit": false,
+    "experimentalDecorators": true,
+    "types": []
+  },
+  "files": ["src/main.ts"],
+  "include": ["src/**/*.d.ts"]
+}

@@ -1,0 +1,64 @@
+<div class="shell" [attr.data-theme]="context().theme">
+  <header class="topbar">
+    <div class="brand">
+      <span>A</span>
+      <div><strong>Angular shell</strong><small>owns the runtime bridge</small></div>
+    </div>
+    <div class="host-actions">
+      <button type="button" (click)="toggleLocale()">Locale: {{ context().locale.toUpperCase() }}</button>
+      <button type="button" (click)="toggleTheme()">Theme: {{ context().theme }}</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <span class="eyebrow">Actual cross-framework integration</span>
+      <h1>Angular host.<br />React feature.</h1>
+      <p>Angular creates and owns one bridge object. It passes that exact object to the React remote during mount—no global lookup required.</p>
+    </section>
+
+    <section class="flow" aria-label="Runtime flow">
+      <article><small>Angular</small><strong>creates bridge</strong></article>
+      <span>→</span><article class="bridge-node"><small>mount(...)</small><strong>passes reference</strong></article>
+      <span>→</span><article><small>React</small><strong>uses same bridge</strong></article>
+    </section>
+
+    <section class="studio-panel" [class.is-playing]="context().playback.playing">
+      <div class="studio-copy">
+        <span class="eyebrow">Angular-owned pulse engine</span>
+        <h2>One beat, two frameworks</h2>
+        <p>Build the rhythm in React below. Angular owns the master clock, renders every beat here, and sends precise ticks back to the React playhead.</p>
+        <button type="button" (click)="remixFromAngular()">Angular rewrites React’s pattern</button>
+      </div>
+      <div class="pulse-stage">
+        <div class="orbital orbital--one" [class.is-hit]="isTrackActive('kick')"></div>
+        <div class="orbital orbital--two" [class.is-hit]="isTrackActive('clap')"></div>
+        <div class="pulse-core" [class.is-hit]="isTrackActive('synth')">
+          <strong>{{ context().playback.currentStep < 0 ? '—' : context().playback.currentStep + 1 }}</strong>
+          <small>BEAT</small>
+        </div>
+        <div class="wave wave--kick" [class.is-hit]="isTrackActive('kick')"></div>
+        <div class="wave wave--clap" [class.is-hit]="isTrackActive('clap')"></div>
+        <div class="wave wave--synth" [class.is-hit]="isTrackActive('synth')"></div>
+        <div class="stage-readout">
+          <span>{{ context().playback.bpm }} BPM</span>
+          <span>{{ context().playback.playing ? 'CLOCK LIVE' : 'CLOCK ARMED' }}</span>
+          <span>ANGULAR ENGINE</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="remote-boundary">
+      <div class="boundary-label">React-owned DOM starts here</div>
+      @if (loading()) { <div class="loader">Angular is loading the React remote…</div> }
+      @if (error()) { <div class="error-state">{{ error() }}</div> }
+      <div #remoteRoot></div>
+    </section>
+
+    <section class="log-panel">
+      <div><span class="eyebrow">Angular activity</span><h2>Watch the boundary</h2></div>
+      <ol>@for (item of activity(); track item) { <li>{{ item }}</li> }</ol>
+    </section>
+  </main>
+  <router-outlet />
+</div>
